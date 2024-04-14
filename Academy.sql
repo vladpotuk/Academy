@@ -9,68 +9,45 @@ SELECT * FROM [Subjects];
 SELECT * FROM [Teachers];
 
 SELECT c.[Name] + ' ' + c.[Surname] AS 'Curator', g.[Name] AS 'Group'
-FROM [Curators] AS c
-INNER JOIN [GroupsCurators] AS gc ON c.[Id] = gc.[CuratorId]
-INNER JOIN [Groups] AS g ON gc.[GroupId] = g.[Id];
+FROM [Curators] c, [GroupsCurators] gc, [Groups] g
+WHERE c.[Id] = gc.[CuratorId] AND gc.[GroupId] = g.[Id];
 
 SELECT f.[Name] AS 'Faculty', d.[Name] AS 'Department'
-FROM [Faculties] AS f
-INNER JOIN [Departments] AS d ON f.[Id] = d.[FacultyId]
-WHERE d.[Financing] > f.[Financing];
+FROM [Faculties] f, [Departments] d
+WHERE d.[FacultyId] = f.[Id] AND d.[Financing] > f.[Financing];
 
 SELECT c.[Name] + ' ' + c.[Surname] AS 'Curator', g.[Name] AS 'Group'
-FROM [Curators] AS c
-INNER JOIN [GroupsCurators] AS gc ON c.[Id] = gc.[CuratorId]
-INNER JOIN [Groups] AS g ON gc.[GroupId] = g.[Id];
+FROM [Curators] c, [GroupsCurators] gc, [Groups] g
+WHERE c.[Id] = gc.[CuratorId] AND gc.[GroupId] = g.[Id];
 
 SELECT t.[Name] + ' ' + t.[Surname] AS 'Teacher', s.[Name] AS 'Subject', g.[Name] AS 'Group'
-FROM [Teachers] AS t
-INNER JOIN [Lectures] AS l ON t.[Id] = l.[TeacherId]
-INNER JOIN [Subjects] AS s ON l.[SubjectId] = s.[Id]
-INNER JOIN [GroupsLectures] AS gl ON l.[Id] = gl.[LectureId]
-INNER JOIN [Groups] AS g ON gl.[GroupId] = g.[Id]
-WHERE g.[Name] = 'P107';
+FROM [Teachers] t, [Lectures] l, [Subjects] s, [GroupsLectures] gl, [Groups] g
+WHERE t.[Id] = l.[TeacherId] AND l.[SubjectId] = s.[Id] AND l.[Id] = gl.[LectureId] AND gl.[GroupId] = g.[Id] AND g.[Name] = 'P107';
 
 SELECT t.[Name] + ' ' + t.[Surname] AS 'Teacher', f.[Name] AS 'Faculty'
-FROM [Teachers] AS t
-INNER JOIN [Lectures] AS l ON t.[Id] = l.[TeacherId]
-INNER JOIN [Subjects] AS s ON l.[SubjectId] = s.[Id]
-INNER JOIN [Departments] AS d ON s.[DepartmentId] = d.[Id]
-INNER JOIN [Faculties] AS f ON d.[FacultyId] = f.[Id];
+FROM [Teachers] t, [Lectures] l, [Subjects] s, [Departments] d, [Faculties] f
+WHERE t.[Id] = l.[TeacherId] AND l.[SubjectId] = s.[Id] AND s.[DepartmentId] = d.[Id] AND d.[FacultyId] = f.[Id];
 
 SELECT d.[Name] AS 'Department', g.[Name] AS 'Group'
-FROM [Departments] AS d
-INNER JOIN [Groups] AS g ON d.[Id] = g.[DepartmentId];
+FROM [Departments] d, [Groups] g
+WHERE d.[Id] = g.[DepartmentId];
 
 SELECT s.[Name] AS 'Subject'
-FROM [Teachers] AS t
-INNER JOIN [Lectures] AS l ON t.[Id] = l.[TeacherId]
-INNER JOIN [Subjects] AS s ON l.[SubjectId] = s.[Id]
-WHERE t.[Name] + ' ' + t.[Surname] = 'Samantha Adams';
+FROM [Teachers] t, [Lectures] l, [Subjects] s
+WHERE t.[Id] = l.[TeacherId] AND l.[SubjectId] = s.[Id] AND t.[Name] + ' ' + t.[Surname] = 'Samantha Adams';
 
 SELECT d.[Name] AS 'Department'
-FROM [Teachers] AS t
-INNER JOIN [Lectures] AS l ON t.[Id] = l.[TeacherId]
-INNER JOIN [Subjects] AS s ON l.[SubjectId] = s.[Id]
-INNER JOIN [Departments] AS d ON s.[DepartmentId] = d.[Id]
-WHERE s.[Name] = 'Database Theory';
+FROM [Teachers] t, [Lectures] l, [Subjects] s, [Departments] d
+WHERE t.[Id] = l.[TeacherId] AND l.[SubjectId] = s.[Id] AND s.[DepartmentId] = d.[Id] AND s.[Name] = 'Database Theory';
 
 SELECT g.[Name] AS 'Group'
-FROM [Groups] AS g
-INNER JOIN [Departments] AS d ON g.[DepartmentId] = d.[Id]
-INNER JOIN [Faculties] AS f ON d.[FacultyId] = f.[Id]
-WHERE f.[Name] = 'Computer Science';
+FROM [Groups] g, [Departments] d, [Faculties] f
+WHERE g.[DepartmentId] = d.[Id] AND d.[FacultyId] = f.[Id] AND f.[Name] = 'Computer Science';
 
 SELECT g.[Name] AS 'Group', f.[Name] AS 'Faculty'
-FROM [Groups] AS g
-INNER JOIN [Departments] AS d ON g.[DepartmentId] = d.[Id]
-INNER JOIN [Faculties] AS f ON d.[FacultyId] = f.[Id]
-WHERE g.[Year] = 5;
+FROM [Groups] g, [Departments] d, [Faculties] f
+WHERE g.[DepartmentId] = d.[Id] AND d.[FacultyId] = f.[Id] AND g.[Year] = 5;
 
 SELECT t.[Name] + ' ' + t.[Surname] AS 'Teacher', s.[Name] AS 'Subject', g.[Name] AS 'Group'
-FROM [Teachers] AS t
-INNER JOIN [Lectures] AS l ON t.[Id] = l.[TeacherId]
-INNER JOIN [Subjects] AS s ON l.[SubjectId] = s.[Id]
-INNER JOIN [GroupsLectures] AS gl ON l.[Id] = gl.[LectureId]
-INNER JOIN [Groups] AS g ON gl.[GroupId] = g.[Id]
-WHERE l.[LectureRoom] = 'B103';
+FROM [Teachers] t, [Lectures] l, [Subjects] s, [GroupsLectures] gl, [Groups] g
+WHERE t.[Id] = l.[TeacherId] AND l.[SubjectId] = s.[Id] AND l.[Id] = gl.[LectureId] AND gl.[GroupId] = g.[Id] AND l.[LectureRoom] = 'B103';
